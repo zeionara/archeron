@@ -126,7 +126,7 @@ ip a
 ping -c 5 8.8.8.8
 ```
 
-which lists all network interfaces and corresponding ip addresses, then pings google's DNS server. If reader hasn't got an ip address, then this should be fixed first before proceeding. It is also possible to connect to wifi, see [instructions below](###connecting-via-wifi) for that. After connection the commands above should be executed for checking that link is indeed established.
+which lists all network interfaces and corresponding ip addresses, then pings google's DNS server. If reader hasn't got an ip address, then this should be fixed first before proceeding. It is also possible to connect to wifi, see [instructions below](#connecting-via-wifi) for that. After connection the commands above should be executed for checking that link is indeed established.
 
 1. Format the partition created on the previous stage if haven't done it before:
 
@@ -159,37 +159,37 @@ genfstab /mnt >> /mnt/etc/fstab
 ```sh
 arch-chroot /mnt
 
-[root@archiso /]# pacman -S linux linux-headers vim sudo which networkmanager wpa_supplicant wireless_tools netctl
-[root@archiso /]# systemctl enable NetworkManager
+[root@archiso /] pacman -S linux linux-headers vim sudo which networkmanager wpa_supplicant wireless_tools netctl
+[root@archiso /] systemctl enable NetworkManager
 ```
 
 1. Configure the system language:
 
 ```sh
-[root@archiso /]# vim /etc/locale.gen  # uncomment line which says 'en_US.UTF-8 UTF-8' (it is strongly recommended to uncomment this value, but if you know what you are doing, you can uncomment any other line which corresponds to your desired locale by removing the '#' symbol in front of it)
-[root@archiso /]# locale-gen
-[root@archiso /]# vim /etc/locale.conf  # write: 'LANG=en_US.UTF-8' or whatever locale you've chosen
-[root@archiso /]# vim /etc/vconsole.conf  # write: 'KEYMAP=us-eng' or whatever locale you've chosen
+[root@archiso /] vim /etc/locale.gen  # uncomment line which says 'en_US.UTF-8 UTF-8' (it is strongly recommended to uncomment this value, but if you know what you are doing, you can uncomment any other line which corresponds to your desired locale by removing the '#' symbol in front of it)
+[root@archiso /] locale-gen
+[root@archiso /] vim /etc/locale.conf  # write: 'LANG=en_US.UTF-8' or whatever locale you've chosen
+[root@archiso /] vim /etc/vconsole.conf  # write: 'KEYMAP=us-eng' or whatever locale you've chosen
 ```
 
 1. Configure the system time:
 
 ```sh
-[root@archiso /]# ln -sf /usr/share/zoneinfo/Europe/Moscow /etc/localtime  # or reader's own timezone
-[root@archiso /]# hwclock --systohc
-[root@archiso /]# timedatectl  # check current date and time
+[root@archiso /] ln -sf /usr/share/zoneinfo/Europe/Moscow /etc/localtime  # or reader's own timezone
+[root@archiso /] hwclock --systohc
+[root@archiso /] timedatectl  # check current date and time
 ```
 
 1. Configure root password:
 
 ```sh
-[root@archiso /]# passwd  # then reader will be prompted to set a new password, type the desired value, then confirm and remember it
+[root@archiso /] passwd  # then reader will be prompted to set a new password, type the desired value, then confirm and remember it
 ```
 
 1. Set the hostname:
 
 ```sh
-[root@archiso /]# vim /etc/hostname  # write 'archeron' or any other name for your OS installation
+[root@archiso /] vim /etc/hostname  # write 'archeron' or any other name for your OS installation
 ```
 
 1. Update the `hosts` file - run command `vim /etc/hosts` and write the following content to the file (replace `archeron` with a custom host name):
@@ -203,32 +203,32 @@ arch-chroot /mnt
 1. Make network connections persistent:
 
 ```sh
-[root@archiso /]# systemctl enable dhcpd
+[root@archiso /] systemctl enable dhcpd
 ```
 
 1. Create a new user:
 
 ```sh
-[root@archiso /]# useradd -m -g users -G wheel mabel  # or any other username instead of 'mabel'
-[root@archiso /]# passwd mabel  # or custom username instead of 'mabel', then write password, confirm and remember it
+[root@archiso /] useradd -m -g users -G wheel mabel  # or any other username instead of 'mabel'
+[root@archiso /] passwd mabel  # or custom username instead of 'mabel', then write password, confirm and remember it
 ```
 
 1. Associate `wheel` group with `sudo`:
 
 ```sh
-[root@archiso /]# EDITOR=vim visudo # Go to line that says '# %wheel ALL=(ALL) NOPASSWD: ALL' and uncomment it by removing '# ' in the beginning
+[root@archiso /] EDITOR=vim visudo # Go to line that says '# %wheel ALL=(ALL) NOPASSWD: ALL' and uncomment it by removing '# ' in the beginning
 ```
 
 1. If you've made some additional changes besides steps discussed in the tutorial, run the following command to refresh `linux` boot images before proceeding:
 
 ```sh
-[root@archiso /]# mkinitcpio -p linux
+[root@archiso /] mkinitcpio -p linux
 ```
 
 1. If you don't have **GRUB**, but still following this tutorial, check out [this link](https://www.youtube.com/watch?v=DPLnBPM4DhI&t=4718s) to the youtube video on how to install it. If you have **GRUB**, then at this step you can reboot into your **current linux OS**:
 
 ```sh
-[root@archiso /]# ^C
+[root@archiso /] ^C
 reboot
 ```
 
@@ -245,7 +245,7 @@ sudo mount /dev/sdaX /mnt/arch
 sudo update-grub
 ```
 
-If there are messages like `/usr/sbin/grub-probe: error: unknown filesystem.`, then check [this section](####metadata-csum-seed-partition-flag) of the tutorial.
+If there are messages like `/usr/sbin/grub-probe: error: unknown filesystem.`, then check [this section](#metadata-csum-seed-partition-flag) of the tutorial.
 
 ### Connecting via wifi
 
