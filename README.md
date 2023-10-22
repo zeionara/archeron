@@ -405,6 +405,7 @@ or manual installation
 
 ```sh
 sudo pacman -S neovim
+
 git clone git@github.com:zeionara/nvim-configs.git "$HOME/.config/nvim_"
 mkdir "$HOME/.config/nvim"
 ln "$HOME/.config/nvim_/lua/plugins.lua" "$HOME/.config/nvim/init.lua"
@@ -422,6 +423,7 @@ git clone --depth 1 https://github.com/dense-analysis/ale.git ~/.local/share/nvi
 8. Install alacritty, then make it the default terminal, if that didn't happen automatically:
 
 ```sh
+sudo pacman -S alacritty
 git clone git@github.com:zeionara/alacritty-config.git "$HOME/alacritty-config"
 $HOME/alacritty-config/setup.sh 
 ```
