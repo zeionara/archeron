@@ -56,6 +56,9 @@ Before starting the tutorial a couple of preparation steps should be made:
 1. Format the partition either right in the UI of the preferred partitioning tool, either via command line: `mkfs.ext4 /dev/sdaX`;
 1. Before proceeding the reader must also make sure that they have [latest arch iso](https://archlinux.org/download/) downloaded and written to `libe usb`. At the time of writing the latest version is `6.5.7`, and current release is `2023.10.14`. It is highly advised to use [ventoy](https://github.com/ventoy/Ventoy) tool to prepare the `live usb` with multiple `iso` files.
 
+> **Important**
+> Don't forget to **create a new partition** before proceeding, and format it as `ext4`
+
 ### Postconditions
 
 The reader has created a new partition, prepared a `live usb` with `iso` file for installing *arch linux*.
@@ -168,8 +171,15 @@ arch-chroot /mnt
 [root@archiso /] systemctl enable NetworkManager
 ```
 
+> **Important**
+> Make sure to install the mentioned network packages and enable the network-manager. These steps are needed for the network to work properly after reboot
+
 8. Extension point (optional) - install [cpu microcode](CPU.md)
 9. Extension point (required) - install [gpu driver][gpu]. If this step is skipped, then there will be [gpu driver issue](#gpu-driver-issue) after reboot
+
+> **Important**
+> Don't skip gpu driver installation - the system will hang on boot without the driver
+
 10. Extension point (optional) - install [sound toolkit](Sound.md)
 11. Extension point (optional) - setup [desktop environment](Desktop.md)
 12. Extension point (optional) - setup [developer tools](AUR.md)
@@ -239,7 +249,7 @@ arch-chroot /mnt
 22. If you don't have **GRUB**, but still following this tutorial, check out [this link](https://www.youtube.com/watch?v=DPLnBPM4DhI&t=4718s) to the youtube video on how to install it (then it is the last step of the current section for you). If you have **GRUB**, then at this step you can reboot into your **current linux OS**:
 
 ```sh
-[root@archiso /] ^C
+[root@archiso /] ^D
 reboot
 ```
 
@@ -249,6 +259,9 @@ reboot
 sudo mkdir -p /mnt/arch
 sudo mount /dev/sdaX /mnt/arch
 ```
+
+> **Important**
+> Don't forget to mount the new partition before proceeding, otherwise grub won't be able to discover the new arch instance
 
 24. Then update **GRUB**. If update was successful, then log will contain messages saying that the **GRUB** installation has successfully discovered the new arch distribution:
 
@@ -386,7 +399,7 @@ curl -Ls https://bit.ly/setup-nvim | bash
 ```
 
 > **Note**
-> Automatic installation through `setup` script is not tested
+> Automatic installation through `setup` script is supported, but not tested yet
 
 or manual installation
 
