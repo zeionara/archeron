@@ -18,20 +18,43 @@ The following tutorial is designed as a beginner-friendly guide of installing *a
 1. The tutorial only covers **UEFI** system configuation, because **BIOS** is outdated (this can be checked by entering one's device's boot menu on startup by pressing a certain combination of keys, which may be different for different devices; alternatively, if you see the option *Enter EFI configuration* in your grub menu, then you are using **UEFI** system);
 1. The tutorial only covers **GPT** partition table, becaue **DOS** is outdated (specifically, before following this instruction reader must make sure that they are using this type of partition table, which can be done using such tool as [cfdisk][cfdisk]).
 
-As follows from the list above, **the tutorial is applicable if reader has an existing linux installation with configured GRUB, uses device with UEFI system and GPT partition table**. If some of the points are not applicable, the tutorial is also useful in case reader is ready to resolve problems that may occur during installation on their own.
+As follows from the list above, **the tutorial is applicable if reader has an existing linux installation with configured GRUB, uses device with UEFI system and GPT partition table**. If some of the points are not applicable, the tutorial is also useful in case reader is ready to resolve problems that may occur during installation on their own.  
+
+> **Info**
+> This tutorial draws inspiration for its structure from the `UML Use cases` specification. Each section is separated into three main parts - 'preconditions', 'main flow' and 'postconditions'. There is an optional section 'pitfalls' in which possible errors and mitigation strategies are described. Terms 'section' and 'stage' might used interchengeably. However, term 'section' is more related to a part of 'tutorial' itself, and 'stage' is related to the part of installation process which corresponds to particular element of the tutorial.
+
+## Useful resources
+
+Although being incomplete, imprecise and out-of-date, some tutorials are still useful when installing *arch linux* by complementing the present guide. Some of the tutorials are:
+
+1. [Official arch linux installation guide][official-guide];
+1. [Ubuntu and arch dual-boot installation guide](https://www.linuxandubuntu.com/home/dual-boot-ubuntu-and-arch-linux) - be warned, here the author uses **DOS** partition table (and possibly **BIOS** instead of **UEFI**), which is incompatible with this tutorial;
+1. [Arch installation guide on youtube](https://www.youtube.com/watch?v=DPLnBPM4DhI) - this guide goes through installation on an empty disk using `linux lvm`. `Linux lvm` actually only complicates the installation process, and overall the guide is extensive but poorly structured;
+1. [How to install GRUB on Arch Linux](https://fasterland.net/how-to-install-grub-on-arch-linux-uefi.html) - this tutorial may be useful as an extension to the current guide which doesn't discuss the issue of installing **GRUB bootloader**.
 
 ## Getting started
+
+### Preconditions
+
+The reader has loaded current linux OS and is getting started to install *arch linux* on the current device
+
+### Main flow
 
 Before starting the tutorial a couple of preparation steps should be made:
 
 1. **Think carefully** whether you want to install this distribution. It is not recommended to use as your main OS (**and on your main device**) if you haven't used it previously due to greater complexity in comparison to other alternatives;
 1. If you've decided to install *arch linux*, then **backup all data that must not be lost**, because if anything goes wrong during installation, there may be awful concequences like wiping out your entire data. That's another **reason to not to use it on your main device**;
 1. After you've become rock-solid in your decision to install *arch linux* and backed up all data, then comes the last preparation step - make sure that you've got enough storage capacity to install the new system. I would recommend **at least 128** GB. This can be done via various utilities (like [gparted][gparted]), the discussion of which is out of the scope of this tutorial. In case reader haven't got free storage on the disk, it is advisable to load from a live usb, pick an existing partition and cut off a part of storage from it by resizing (which, again, might be done with such tool as [gparted][gparted]). For example, if there is a partition of 800 GB with Ubuntu installed, and only 50% of this space is used, it is possible to cut 200 GB from this partition, which will be converted into free space. **However, the cutting operation may lead data loss**, so make sure that you've copied all important data to an external device;
-1. When there is enough free space, **the partition on which arch linux will be installed must be created in advance using the same tool which was applied during the current linux OS installation** to avoid later problems with booting from such partition. The type of partition must be **Linux filesystem** partition. When creating a new parition double check that you haven't accidentally changed other partitions. **This is the most dangerous step of the tutorial**. If everything looks file, go ahead and commit changes.
+1. When there is enough free space, **the partition on which arch linux will be installed must be created in advance using the same tool which was applied during the current linux OS installation** to avoid later problems with booting from such partition. The type of partition must be **Linux filesystem** partition. When creating a new parition double check that you haven't accidentally changed other partitions. **This is the most dangerous step of the tutorial**. If everything looks file, go ahead and commit changes;
+1. Before proceeding the reader must also make sure that they have [latest arch iso](https://archlinux.org/download/) downloaded and written to `libe usb`. At the time of writing the latest version is `6.5.7`, and current release is `2023.10.14`. It is highly advised to use [ventoy](https://github.com/ventoy/Ventoy) tool to prepare the `live usb` with multiple `iso` files.
+
+### Postconditions
+
+The reader has created a new partition, prepared a `live usb` with `iso` file for installing *arch linux*.
 
 ### Pitfalls
 
-There are a couple pitfalls that may occur on this stage:
+There is a pitfall that may occur on this stage, but resurface on later stages:
 
 #### Metadata csum seed partition flag
 
@@ -71,8 +94,8 @@ Then check again, if there is no such flag anymore, then reboot and hopefully no
 
 Related links:
 
-[unknown filesystem when updating grub](https://askubuntu.com/questions/895632/update-grub-install-grub-error-unknown-filesystem)
-[grub bug description](https://bugs.launchpad.net/ubuntu/+source/grub2/+bug/1844012)
+[unknown filesystem when updating grub](https://askubuntu.com/questions/895632/update-grub-install-grub-error-unknown-filesystem)  
+[grub bug description](https://bugs.launchpad.net/ubuntu/+source/grub2/+bug/1844012)  
 [tune2fs problem](https://askubuntu.com/questions/1042243/tune2fs-complaining-about-unsupported-read-only-features-on-fresh-ext4-files)
 
 [official-guide]: https://wiki.archlinux.org/title/installation_guide
