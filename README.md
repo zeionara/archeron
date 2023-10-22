@@ -119,7 +119,7 @@ Basically, the installation consists of a several steps of downloading, copying 
 rmmod pcspkr
 ```
 
-1. Second, internet connection must be checked. For the most convenience it is advisable to connect using an `ethernet` cable and just check the connection status using:
+2. Second, internet connection must be checked. For the most convenience it is advisable to connect using an `ethernet` cable and just check the connection status using:
 
 ```sh
 ip a
@@ -128,13 +128,13 @@ ping -c 5 8.8.8.8
 
 which lists all network interfaces and corresponding ip addresses, then pings google's DNS server. If reader hasn't got an ip address, then this should be fixed first before proceeding. It is also possible to connect to wifi, see [instructions below](#connecting-via-wifi) for that. After connection the commands above should be executed for checking that link is indeed established.
 
-1. Format the partition created on the previous stage if haven't done it before:
+3. Format the partition created on the previous stage if haven't done it before:
 
 ```sh
 mkfs.ext4 /dev/sdaX
 ```
 
-1. Mount the partition by running the following commands:
+4. Mount the partition by running the following commands:
 
 ```sh
 mount /dev/sdaX /mnt
@@ -142,19 +142,19 @@ mkdir /mnt/home
 mount /dev/sdaX /mnt/home
 ```
 
-1. Bootstrap packages - essential arch distro tools should be installed at this stage by running the following command:
+5. Bootstrap packages - essential arch distro tools should be installed at this stage by running the following command:
 
 ```sh
 pacstrap -i /mnt base
 ```
 
-1. Generate filesystem information file:
+6. Generate filesystem information file:
 
 ```sh
 genfstab /mnt >> /mnt/etc/fstab
 ```
 
-1. Install a couple of essential components, which aren't installed by default. Switch to the newly instantiated arch distibution and install the corresponding packages, then enable some services:
+7. Install a couple of essential components, which aren't installed by default. Switch to the newly instantiated arch distibution and install the corresponding packages, then enable some services:
 
 ```sh
 arch-chroot /mnt
@@ -163,7 +163,7 @@ arch-chroot /mnt
 [root@archiso /] systemctl enable NetworkManager
 ```
 
-1. Configure the system language:
+8. Configure the system language:
 
 ```sh
 [root@archiso /] vim /etc/locale.gen  # uncomment line which says 'en_US.UTF-8 UTF-8' (it is strongly recommended to uncomment this value, but if you know what you are doing, you can uncomment any other line which corresponds to your desired locale by removing the '#' symbol in front of it)
@@ -172,7 +172,7 @@ arch-chroot /mnt
 [root@archiso /] vim /etc/vconsole.conf  # write: 'KEYMAP=us-eng' or whatever locale you've chosen
 ```
 
-1. Configure the system time:
+9. Configure the system time:
 
 ```sh
 [root@archiso /] ln -sf /usr/share/zoneinfo/Europe/Moscow /etc/localtime  # or reader's own timezone
@@ -180,19 +180,19 @@ arch-chroot /mnt
 [root@archiso /] timedatectl  # check current date and time
 ```
 
-1. Configure root password:
+10. Configure root password:
 
 ```sh
 [root@archiso /] passwd  # then reader will be prompted to set a new password, type the desired value, then confirm and remember it
 ```
 
-1. Set the hostname:
+11. Set the hostname:
 
 ```sh
 [root@archiso /] vim /etc/hostname  # write 'archeron' or any other name for your OS installation
 ```
 
-1. Update the `hosts` file - run command `vim /etc/hosts` and write the following content to the file (replace `archeron` with a custom host name):
+12. Update the `hosts` file - run command `vim /etc/hosts` and write the following content to the file (replace `archeron` with a custom host name):
 
 ```sh
 127.0.0.1 localhost.localdomain localhost
@@ -200,49 +200,56 @@ arch-chroot /mnt
 127.0.0.1 archeron.localdomain archeron
 ```
 
-1. Make network connections persistent:
+13. Make network connections persistent:
 
 ```sh
 [root@archiso /] systemctl enable dhcpd
 ```
 
-1. Create a new user:
+14. Create a new user:
 
 ```sh
 [root@archiso /] useradd -m -g users -G wheel mabel  # or any other username instead of 'mabel'
 [root@archiso /] passwd mabel  # or custom username instead of 'mabel', then write password, confirm and remember it
 ```
 
-1. Associate `wheel` group with `sudo`:
+15. Associate `wheel` group with `sudo`:
 
 ```sh
 [root@archiso /] EDITOR=vim visudo # Go to line that says '# %wheel ALL=(ALL) NOPASSWD: ALL' and uncomment it by removing '# ' in the beginning
 ```
 
-1. If you've made some additional changes besides steps discussed in the tutorial, run the following command to refresh `linux` boot images before proceeding:
+16. If you've made some additional changes besides steps discussed in the tutorial, run the following command to refresh `linux` boot images before proceeding:
 
 ```sh
 [root@archiso /] mkinitcpio -p linux
 ```
 
-1. If you don't have **GRUB**, but still following this tutorial, check out [this link](https://www.youtube.com/watch?v=DPLnBPM4DhI&t=4718s) to the youtube video on how to install it. If you have **GRUB**, then at this step you can reboot into your **current linux OS**:
+17. If you don't have **GRUB**, but still following this tutorial, check out [this link](https://www.youtube.com/watch?v=DPLnBPM4DhI&t=4718s) to the youtube video on how to install it. If you have **GRUB**, then at this step you can reboot into your **current linux OS**:
 
 ```sh
 [root@archiso /] ^C
 reboot
 ```
 
-1. Then **mount the new partition**:
+18. Then **mount the new partition**:
 
 ```sh
-mkdir -p /mnt/arch
+sudo mkdir -p /mnt/arch
 sudo mount /dev/sdaX /mnt/arch
 ```
 
-1. Then update **GRUB**. If update was successful, then log will contain messages saying that the **GRUB** installation has successfully discovered the new arch distribution:
+19. Then update **GRUB**. If update was successful, then log will contain messages saying that the **GRUB** installation has successfully discovered the new arch distribution:
 
 ```sh
 sudo update-grub
+```
+
+20. Unmount the partition mounted before:
+
+```sh
+sudo umount /mnt/arch
+sudo rmdir /mnt/arch
 ```
 
 If there are messages like `/usr/sbin/grub-probe: error: unknown filesystem.`, then check [this section](#metadata-csum-seed-partition-flag) of the tutorial.
