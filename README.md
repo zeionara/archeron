@@ -21,7 +21,12 @@ The following tutorial is designed as a beginner-friendly guide of installing *a
 As follows from the list above, **the tutorial is applicable if reader has an existing linux installation with configured GRUB, uses device with UEFI system and GPT partition table**. If some of the points are not applicable, the tutorial is also useful in case reader is ready to resolve problems that may occur during installation on their own.  
 
 > **Note**
-> This tutorial draws inspiration for its structure from the `UML Use cases` specification. Each section is separated into three main parts - 'preconditions', 'main flow' and 'postconditions'. There is an optional section 'pitfalls' in which possible errors and mitigation strategies are described. Terms 'section' and 'stage' might used interchengeably. However, term 'section' is more related to a part of 'tutorial' itself, and 'stage' is related to the part of installation process which corresponds to particular element of the tutorial.
+> This tutorial draws inspiration for its structure from the `UML Use cases` specification. Each section is separated into three main parts - 'preconditions', 'main flow' and 'postconditions'. There are a few optional sections: 'pitfalls', in which possible errors and mitigation strategies are described, and 'extension-points', in which the branching of the installation is described (situations of uncertainty, when in some situations one option will be preferable and in other circumstances - another options; for example - gpu drivers installation).
+
+> **Note**
+> Terms 'section' and 'stage' might be used interchengeably. However, term 'section' is more related to a part of 'tutorial' itself, and 'stage' is related to the part of installation process which corresponds to particular element of the tutorial.  
+
+P.S. In cases of ambiguities in the tutorial, refer to the [installation logs](assets/logs) which are histories of commands from real arch installations.
 
 ## Useful resources
 
@@ -103,13 +108,13 @@ Related links:
 
 ## Installing the core components
 
-This section of the tutorial describes how to install core components of the *arch linux* OS. Before proceeding, reader must've booted from the `live usb` prepared on the previous stage.
+This section of the tutorial describes how to install core components of the *arch linux* OS. Before proceeding, reader must've booted from the `live usb` prepared on the previous stage. This sections contains **4 extension points**, some of which are `required` and some are `optional`. The `optional` extension points here are not `optional` in the sense that usually you should ignore them and just proceed to the next steps, they are optional in the sense that they are **highly advisable**, and if you don't want to execute them, then technically you don't have to, and the installation will boot without them, but you must've got reasons for doing that.
 
-## Preconditions
+### Preconditions
 
-The user has successfully booted from the `live usb` with *arch linux*
+The user has successfully booted from the `live usb` with *arch linux*.
 
-## Main flow
+### Main flow
 
 Basically, the installation consists of a several steps of downloading, copying and updating various pieces of software making up the linux distribution, which is not very different from the steps explained in other tutorials:
 
@@ -163,7 +168,13 @@ arch-chroot /mnt
 [root@archiso /] systemctl enable NetworkManager
 ```
 
-8. Configure the system language:
+8. Extension point (optional) - install [cpu microcode](CPU.md)
+9. Extension point (required) - install [gpu driver][gpu]. If this step is skipped, then there will be [gpu driver issue](#gpu-driver-issue) after reboot
+10. Extension point (optional) - install [sound toolkit](Sound.md)
+11. Extension point (optional) - setup [desktop environment](Desktop.md)
+12. Extension point (optional) - setup [developer tools](AUR.md)
+
+13. Configure the system language:
 
 ```sh
 [root@archiso /] vim /etc/locale.gen  # uncomment line which says 'en_US.UTF-8 UTF-8' (it is strongly recommended to uncomment this value, but if you know what you are doing, you can uncomment any other line which corresponds to your desired locale by removing the '#' symbol in front of it)
@@ -172,7 +183,7 @@ arch-chroot /mnt
 [root@archiso /] vim /etc/vconsole.conf  # write: 'KEYMAP=us-eng' or whatever locale you've chosen
 ```
 
-9. Configure the system time:
+14. Configure the system time:
 
 ```sh
 [root@archiso /] ln -sf /usr/share/zoneinfo/Europe/Moscow /etc/localtime  # or reader's own timezone
@@ -180,19 +191,19 @@ arch-chroot /mnt
 [root@archiso /] timedatectl  # check current date and time
 ```
 
-10. Configure root password:
+15. Configure root password:
 
 ```sh
 [root@archiso /] passwd  # then reader will be prompted to set a new password, type the desired value, then confirm and remember it
 ```
 
-11. Set the hostname:
+16. Set the hostname:
 
 ```sh
 [root@archiso /] vim /etc/hostname  # write 'archeron' or any other name for your OS installation
 ```
 
-12. Update the `hosts` file - run command `vim /etc/hosts` and write the following content to the file (replace `archeron` with a custom host name):
+17. Update the `hosts` file - run command `vim /etc/hosts` and write the following content to the file (replace `archeron` with a custom host name):
 
 ```sh
 127.0.0.1 localhost.localdomain localhost
@@ -200,52 +211,52 @@ arch-chroot /mnt
 127.0.0.1 archeron.localdomain archeron
 ```
 
-13. Make network connections persistent:
+18. Make network connections persistent:
 
 ```sh
 [root@archiso /] systemctl enable dhcpd
 ```
 
-14. Create a new user:
+19. Create a new user:
 
 ```sh
 [root@archiso /] useradd -m -g users -G wheel mabel  # or any other username instead of 'mabel'
 [root@archiso /] passwd mabel  # or custom username instead of 'mabel', then write password, confirm and remember it
 ```
 
-15. Associate `wheel` group with `sudo`:
+20. Associate `wheel` group with `sudo`:
 
 ```sh
 [root@archiso /] EDITOR=vim visudo # Go to line that says '# %wheel ALL=(ALL) NOPASSWD: ALL' and uncomment it by removing '# ' in the beginning
 ```
 
-16. If you've made some additional changes besides steps discussed in the tutorial, run the following command to refresh `linux` boot images before proceeding:
+21. Run the following command to refresh presets for initial ramdisk:
 
 ```sh
-[root@archiso /] mkinitcpio -p linux
+[root@archiso /] mkinitcpio -P
 ```
 
-17. If you don't have **GRUB**, but still following this tutorial, check out [this link](https://www.youtube.com/watch?v=DPLnBPM4DhI&t=4718s) to the youtube video on how to install it. If you have **GRUB**, then at this step you can reboot into your **current linux OS**:
+22. If you don't have **GRUB**, but still following this tutorial, check out [this link](https://www.youtube.com/watch?v=DPLnBPM4DhI&t=4718s) to the youtube video on how to install it (then it is the last step of the current section for you). If you have **GRUB**, then at this step you can reboot into your **current linux OS**:
 
 ```sh
 [root@archiso /] ^C
 reboot
 ```
 
-18. Then **mount the new partition**:
+23. Then **mount the new partition**:
 
 ```sh
 sudo mkdir -p /mnt/arch
 sudo mount /dev/sdaX /mnt/arch
 ```
 
-19. Then update **GRUB**. If update was successful, then log will contain messages saying that the **GRUB** installation has successfully discovered the new arch distribution:
+24. Then update **GRUB**. If update was successful, then log will contain messages saying that the **GRUB** installation has successfully discovered the new arch distribution:
 
 ```sh
 sudo update-grub
 ```
 
-20. Unmount the partition mounted before:
+25. Unmount the partition mounted before:
 
 ```sh
 sudo umount /mnt/arch
@@ -278,9 +289,135 @@ iwctl
 
 after that the reader will be prompted to type password, and the connection will be established if the password is correct. Make sure to wait for a few seconds until the connection is established.
 
-## Postconditions
+### Postconditions
 
 Reader has installed the core components of *arch linux*, configured **GRUB** and is ready to boot the newly installed system.
+
+### Pitfalls
+
+There is an issue which occurs when gpu drivers are not properly configured:
+
+#### GPU driver issue
+
+The issue is identified, when system starts to boot, but hangs after writing `Triggering uevents`. The problem is diagnosed by editing **GRUB** entry - the reader should press `e` button while selecting it in **GRUB** menu, and adding `loglevel=7` at the end of line starting with `linux`. Then the reader should reboot and pay attention to what is written on screen - if the last entries contain keywords related to gpu, then there is hight probability that problem lies in the drivers. The mitigation strategy is following:
+
+1. Make sure that all necessary steps from [gpu installation][gpu] extension point are executed;
+1. Make sure that command `mkinitcpio -P` is run after driver is installed.
+
+Related links:
+
+[the system hangs at triggering uevents](https://bbs.archlinux.org/viewtopic.php?id=151259)  
+[agp and radeon graphics nomodeset](https://bbs.archlinux.org/viewtopic.php?id=182244)
+
+## Installing auxiliary components
+
+After the core components are installed, the system must boot well. However, it is still far from perfect and more changes should be commited to make it more useful. All steps of the main flow in this section are highly opinionated and entirely optional, so reader should feel free to skip them as they want.
+
+### Preconditions
+
+The system has booted successfully, login screen is shown, after login the desktop manager is started.
+
+### Main flow
+
+1. Install some auxiliary software:
+
+```sh
+sudo pacman -S neofetch unzip
+yay -S google-chrome
+```
+
+The browser can be launched either by typing `google-chrome-stable` in the console either by choosing it in the app menu of the desktop manager.
+
+2. Install [nerd fonts](https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts) - download preferred items, then run following commands, which should be adapted appropriately:
+
+```sh
+cd Downloads/
+
+mkdir Inconsolata
+unzip Inconsolata.zip -d Inconsolata
+
+mkdir UbuntuMono
+unzip UbuntuMono.zip -d UbuntuMono
+
+mkdir -p ~/.fonts
+mv Inconsolata/*.tff ~/.fonts
+mv UbuntuMono/*.tff ~/.fonts
+
+rm -rf Inconsolata
+rm -rf UbuntuMono
+rm Inconsolata.zip
+rm UbuntuMono.zip
+
+sudo fc-cache -f -v
+```
+
+3. Install `bash-tools` by running the following commands, then reopen terminal to use added extensions:
+
+```sh
+git clone https://github.com/zeionara/bash-tools.git "$HOME/bash-tools"
+echo -e '\n. "$HOME/bash-tools/.bashrc"' >> '$HOME/.bashrc'
+```
+
+4. Generate `ssh` and `gpg` keys, add them to `github`, `gitlab`, `huggingface`, etc:
+
+```sh
+ssgen
+gpgeng
+```
+
+5. Install `git-tools`, then reopen terminal to use added extensions:
+
+```sh
+git clone git@github.com/zeionara/git-tools.git "$HOME/git-tools"
+echo -e '\n. "$HOME/git-tools/.bashrc"' >> '$HOME/.bashrc'
+```
+
+6. Install `colorful-prompt`, then reopen terminal to see changes:
+
+```sh
+git clone git@github.com:zeionara/colorful-prompt.git "$HOME/colorful-prompt"
+echo -e '\n. "$HOME/colorful-prompt/colorful-prompt.sh"' >> '$HOME/.bashrc'
+```
+
+7. Install `neovim`:
+
+```sh
+curl -Ls https://bit.ly/setup-nvim | bash
+```
+
+> **Note**
+> Automatic installation through `setup` script is not tested
+
+or manual installation
+
+```sh
+sudo pacman -S neovim
+git clone git@github.com:zeionara/nvim-configs.git "$HOME/.config/nvim_"
+mkdir "$HOME/.config/nvim"
+ln "$HOME/.config/nvim_/lua/plugins.lua" "$HOME/.config/nvim/init.lua"
+
+git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerInstall'
+
+rm -rf $HOME/.config/nvim
+mv $HOME/.config/nvim_ $HOME/.config/nvim
+
+mkdir -p ~/.local/share/nvim/site/pack/git-plugins/start
+git clone --depth 1 https://github.com/dense-analysis/ale.git ~/.local/share/nvim/site/pack/git-plugins/start/ale
+```
+
+8. Install alacritty, then make it the default terminal, if that didn't happen automatically:
+
+```sh
+git clone git@github.com:zeionara/alacritty-config.git "$HOME/alacritty-config"
+$HOME/alacritty-config/setup.sh 
+```
+
+### Postconditions
+
+The system is fully configured and ready to use
+
+[gpu]: GPU.md
 
 [official-guide]: https://wiki.archlinux.org/title/installation_guide
 [official-forum]: https://bbs.archlinux.org/
