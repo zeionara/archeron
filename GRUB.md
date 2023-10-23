@@ -36,10 +36,10 @@ genfstab /mnt >> /mnt/etc/fstab
 arch-chroot /mnt
 ```
 
-5. Call `os-prober` to automatically discover other installed OSes. If reader is sure that there are no other OSes installed, this step can be skipped:
-
 > **Note**
-> It is advisable to **mount the partitions with other OSes** before proceeding to enable their discovery by **GRUB**. There is a problem that occurs if the partitions are not mounted when updating the existing **GRUB** installation
+> It is advisable to **mount the partitions with other OSes** before proceeding to enable their discovery by **GRUB**. There is a problem that occurs if the partitions are not mounted when updating an existing **GRUB** installation
+
+5. Call `os-prober` to automatically discover other installed OSes. If reader is sure that there are no other OSes installed, this step can be skipped:
 
 ```sh
 [root@archiso /] pacman -S os-prober
