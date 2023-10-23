@@ -309,7 +309,9 @@ The system has booted successfully, login screen is shown, after login the deskt
 
 ### Main flow
 
-1. Install some auxiliary software:
+1. Enable `tap to click` following [this instruction](https://docs.fedoraproject.org/en-US/quick-docs/enable-touchpad-click/)
+
+2. Install some auxiliary software:
 
 ```sh
 sudo pacman -S neofetch unzip
@@ -318,7 +320,7 @@ yay -S google-chrome
 
 The browser can be launched either by typing `google-chrome-stable` in the console either by choosing it in the app menu of the desktop manager.
 
-2. Setup fonts - enable emoji support and install [nerd fonts](https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts) - download preferred items, then run following commands, which should be adapted appropriately:
+3. Setup fonts - enable emoji support and install [nerd fonts](https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts) - download preferred items, then run following commands, which should be adapted appropriately:
 
 ```sh
 sudo pacman -S noto-fonts-emoji
@@ -346,35 +348,35 @@ sudo fc-cache -f -v
 > **Note**
 > Fonts are not updated everywhere even after running `sudo fc-cache -f -v`. To apply the changes systemwise, relogin into the system.
 
-3. Install `bash-tools` by running the following commands, then reopen terminal to use added extensions:
+4. Install `bash-tools` by running the following commands, then reopen terminal to use added extensions:
 
 ```sh
 git clone https://github.com/zeionara/bash-tools.git "$HOME/bash-tools"
 echo -e '\n. "$HOME/bash-tools/.bashrc"' >> "$HOME/.bashrc"
 ```
 
-4. Generate `ssh` and `gpg` keys, add them to `github`, `gitlab`, `huggingface`, etc:
+5. Generate `ssh` and `gpg` keys, add them to `github`, `gitlab`, `huggingface`, etc:
 
 ```sh
 ssgen
 gpgeng
 ```
 
-5. Install `git-tools`, then reopen terminal to use added extensions:
+6. Install `git-tools`, then reopen terminal to use added extensions:
 
 ```sh
 git clone git@github.com/zeionara/git-tools.git "$HOME/git-tools"
 echo -e '\n. "$HOME/git-tools/.bashrc"' >> "$HOME/.bashrc"
 ```
 
-6. Install `colorful-prompt`, then reopen terminal to see changes:
+7. Install `colorful-prompt`, then reopen terminal to see changes:
 
 ```sh
 git clone git@github.com:zeionara/colorful-prompt.git "$HOME/colorful-prompt"
 echo -e '\n. "$HOME/colorful-prompt/colorful-prompt.sh"' >> "$HOME/.bashrc"
 ```
 
-7. Install `neovim`:
+8. Install `neovim`:
 
 ```sh
 curl -Ls https://bit.ly/setup-nvim | bash
@@ -402,7 +404,7 @@ mkdir -p ~/.local/share/nvim/site/pack/git-plugins/start
 git clone --depth 1 https://github.com/dense-analysis/ale.git ~/.local/share/nvim/site/pack/git-plugins/start/ale
 ```
 
-8. Install alacritty, then make it the default terminal, if that didn't happen automatically:
+9. Install alacritty, then make it the default terminal, if that didn't happen automatically:
 
 ```sh
 sudo pacman -S alacritty
@@ -410,21 +412,21 @@ git clone git@github.com:zeionara/alacritty-config.git "$HOME/alacritty-config"
 $HOME/alacritty-config/setup.sh 
 ```
 
-9. Install `docker-tools`:
+10. Install `docker-tools`:
 
 ```sh
 git clone git@github.com:zeionara/docker-tools.git "$HOME/docker-tools"
 echo -e '\n. $HOME/docker-tools/aliases.sh' >> "$HOME/.bashrc"
 ```
 
-10. Install `kubetools`:
+11. Install `kubetools`:
 
 ```sh
 git clone git@github.com:zeionara/kubetools.git "$HOME/kubetools"
 echo -e '\n. "$HOME/kubetools/.bashrc"' >> "$HOME/.bashrc"
 ```
 
-11. Install `curl-tools`:
+12. Install `curl-tools`:
 
 ```sh
 git clone git@gist.github.com:582902c79fc1a58c36b1b2c554a02b81.git "$HOME/curl-tools"
@@ -432,14 +434,14 @@ echo -e '\n. "$HOME/curl-tools/.bashrc"' >> "$HOME/.bashrc"
 ln "$HOME/curl-tools/.curlrc" "$HOME/.curlrc"
 ```
 
-12. Install `paste-token`:
+13. Install `paste-token`:
 
 ```sh
 git clone git@gist.github.com:cc99dafb61a766b7ff88d8efa09b93b3.git "$HOME/paste-token"
 echo -e '\n. $HOME/paste-token/aliases.sh' >> "$HOME/.bashrc"
 ```
 
-13. Install `tmux`:
+14. Install `tmux`:
 
 ```sh
 sudo pacman -S tmux
@@ -447,7 +449,7 @@ git clone git@github.com:zeionara/tmux-config.git "$HOME/tmux-config"
 $HOME/tmux-config/install.sh
 ```
 
-14. Setup `bashrc`
+15. Setup `bashrc`
 
 ```sh
 git clone git@github.com:zeionara/bashrc.git "$HOME/bashrc"
