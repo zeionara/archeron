@@ -1,4 +1,4 @@
-# Sound
+# GRUB
 
 **GRUB** is required to enable multi-OS setup support. This can be done in multiple ways, one of the following options must be chosen depending on reader's configuration :
 
@@ -26,7 +26,7 @@ If you don't have **GRUB**, but still following this tutorial, check out [this l
 ```sh
 [root@archiso /] ^D
 mkdir -p /mnt/boot/efi
-mount /dev/sdaX /boot/efi
+mount /dev/sdaX /mnt/boot/efi
 ```
 
 4. Refresh `fstab` file:
