@@ -350,7 +350,7 @@ sudo fc-cache -f -v
 
 ```sh
 git clone https://github.com/zeionara/bash-tools.git "$HOME/bash-tools"
-echo -e '\n. "$HOME/bash-tools/.bashrc"' >> '$HOME/.bashrc'
+echo -e '\n. "$HOME/bash-tools/.bashrc"' >> "$HOME/.bashrc"
 ```
 
 4. Generate `ssh` and `gpg` keys, add them to `github`, `gitlab`, `huggingface`, etc:
@@ -364,14 +364,14 @@ gpgeng
 
 ```sh
 git clone git@github.com/zeionara/git-tools.git "$HOME/git-tools"
-echo -e '\n. "$HOME/git-tools/.bashrc"' >> '$HOME/.bashrc'
+echo -e '\n. "$HOME/git-tools/.bashrc"' >> "$HOME/.bashrc"
 ```
 
 6. Install `colorful-prompt`, then reopen terminal to see changes:
 
 ```sh
 git clone git@github.com:zeionara/colorful-prompt.git "$HOME/colorful-prompt"
-echo -e '\n. "$HOME/colorful-prompt/colorful-prompt.sh"' >> '$HOME/.bashrc'
+echo -e '\n. "$HOME/colorful-prompt/colorful-prompt.sh"' >> "$HOME/.bashrc"
 ```
 
 7. Install `neovim`:
@@ -409,6 +409,55 @@ sudo pacman -S alacritty
 git clone git@github.com:zeionara/alacritty-config.git "$HOME/alacritty-config"
 $HOME/alacritty-config/setup.sh 
 ```
+
+9. Install `docker-tools`:
+
+```sh
+git clone git@github.com:zeionara/docker-tools.git "$HOME/docker-tools"
+echo -e '\n. $HOME/docker-tools/aliases.sh' >> "$HOME/.bashrc"
+```
+
+10. Install `kubetools`:
+
+```sh
+git clone git@github.com:zeionara/kubetools.git "$HOME/kubetools"
+echo -e '\n. "$HOME/kubetools/.bashrc"' >> "$HOME/.bashrc"
+```
+
+11. Install `curl-tools`:
+
+```sh
+git clone git@gist.github.com:582902c79fc1a58c36b1b2c554a02b81.git "$HOME/curl-tools"
+echo -e '\n. "$HOME/curl-tools/.bashrc"' >> "$HOME/.bashrc"
+ln "$HOME/curl-tools/.curlrc" "$HOME/.curlrc"
+```
+
+12. Install `paste-token`:
+
+```sh
+git clone git@gist.github.com:cc99dafb61a766b7ff88d8efa09b93b3.git "$HOME/paste-token"
+echo -e '\n. $HOME/paste-token/aliases.sh' >> "$HOME/.bashrc"
+```
+
+13. Install `tmux`:
+
+```sh
+sudo pacman -S tmux
+git clone git@github.com:zeionara/tmux-config.git "$HOME/tmux-config"
+$HOME/tmux-config/install.sh
+```
+
+14. Setup `bashrc`
+
+```sh
+git clone git@github.com:zeionara/bashrc.git "$HOME/bashrc"
+$HOME/bashrc/setup.sh
+[zsh default prompt] ^D # exit the shell entered afte oh-my-zsh has been configured, and continue installation
+zsh # enter zsh shell again
+fast-theme "$HOME/bashrc/snuffari.ini"
+```
+
+Then if you've answered 'yes' to `make zsh the default shell`, relogin to apply the changes.
 
 ### Postconditions
 
