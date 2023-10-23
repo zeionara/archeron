@@ -80,7 +80,7 @@ sudo mount /dev/sdaX /mnt/arch
 sudo update-grub
 ```
 
-If there are messages like `/usr/sbin/grub-probe: error: unknown filesystem.`, then check [this section](README.md#metadata-csum-seed-partition-flag) of the tutorial's main page.
+If there are messages like `/usr/sbin/grub-probe: error: unknown filesystem.`, then check [this section](../README.md#metadata-csum-seed-partition-flag) of the tutorial's main page.
 
 3. Unmount the partition mounted before:
 

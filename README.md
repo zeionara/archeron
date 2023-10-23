@@ -174,15 +174,15 @@ arch-chroot /mnt
 > **Important**
 > Make sure to install the mentioned network packages and enable the network-manager. These steps are needed for the network to work properly after reboot
 
-8. Extension point (optional) - install [cpu microcode](CPU.md)
+8. Extension point (optional) - install [cpu microcode](extension-points/CPU.md)
 9. Extension point (required) - install [gpu driver][gpu]. If this step is skipped, then there will be [gpu driver issue](#gpu-driver-issue) after reboot
 
 > **Important**
 > Don't skip gpu driver installation - the system will hang on boot without the driver
 
-10. Extension point (optional) - install [sound toolkit](Sound.md)
-11. Extension point (optional) - setup [desktop environment](Desktop.md)
-12. Extension point (optional) - setup [developer tools](AUR.md)
+10. Extension point (optional) - install [sound toolkit](extension-points/Sound.md)
+11. Extension point (optional) - setup [desktop environment](extension-points/Desktop.md)
+12. Extension point (optional) - setup [developer tools](extension-points/AUR.md)
 
 13. Configure the system language:
 
@@ -246,7 +246,7 @@ arch-chroot /mnt
 [root@archiso /] mkinitcpio -P
 ```
 
-22. Extension point (required) - [setup grub](GRUB.md)
+22. Extension point (required) - [setup grub](extension-points/GRUB.md)
 23. Reboot into the newly installed OS - now the system should boot successfully, choose appropriate option from the **GRUB** menu:
 
 ```sh
@@ -413,7 +413,7 @@ $HOME/alacritty-config/setup.sh
 
 The system is fully configured and ready to use
 
-[gpu]: GPU.md
+[gpu]: extension-points/GPU.md
 
 [official-guide]: https://wiki.archlinux.org/title/installation_guide
 [official-forum]: https://bbs.archlinux.org/
