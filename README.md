@@ -167,7 +167,7 @@ genfstab /mnt >> /mnt/etc/fstab
 ```sh
 arch-chroot /mnt
 
-[root@archiso /] pacman -S linux linux-headers vim sudo which networkmanager wpa_supplicant wireless_tools netctl
+[root@archiso /] pacman -S linux linux-headers vim sudo which networkmanager # another network tools: wpa_supplicant wireless_tools netctl
 [root@archiso /] systemctl enable NetworkManager
 ```
 
@@ -246,37 +246,13 @@ arch-chroot /mnt
 [root@archiso /] mkinitcpio -P
 ```
 
-22. If you don't have **GRUB**, but still following this tutorial, check out [this link](https://www.youtube.com/watch?v=DPLnBPM4DhI&t=4718s) to the youtube video on how to install it (then it is the last step of the current section for you). If you have **GRUB**, then at this step you can reboot into your **current linux OS**:
+22. Extension point (required) - [setup grub](GRUB.md)
+23. Reboot into the newly installed OS - now the system should boot successfully, choose appropriate option from the **GRUB** menu:
 
 ```sh
 [root@archiso /] ^D
 reboot
 ```
-
-23. Then **mount the new partition**:
-
-```sh
-sudo mkdir -p /mnt/arch
-sudo mount /dev/sdaX /mnt/arch
-```
-
-> **Important**
-> Don't forget to mount the new partition before proceeding, otherwise grub won't be able to discover the new arch instance
-
-24. Then update **GRUB**. If update was successful, then log will contain messages saying that the **GRUB** installation has successfully discovered the new arch distribution:
-
-```sh
-sudo update-grub
-```
-
-25. Unmount the partition mounted before:
-
-```sh
-sudo umount /mnt/arch
-sudo rmdir /mnt/arch
-```
-
-If there are messages like `/usr/sbin/grub-probe: error: unknown filesystem.`, then check [this section](#metadata-csum-seed-partition-flag) of the tutorial.
 
 ### Connecting via wifi
 
@@ -341,9 +317,11 @@ yay -S google-chrome
 
 The browser can be launched either by typing `google-chrome-stable` in the console either by choosing it in the app menu of the desktop manager.
 
-2. Install [nerd fonts](https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts) - download preferred items, then run following commands, which should be adapted appropriately:
+2. Setup fonts - enable emoji support and install [nerd fonts](https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts) - download preferred items, then run following commands, which should be adapted appropriately:
 
 ```sh
+sudo pacman -S noto-fonts-emoji
+
 cd Downloads/
 
 mkdir Inconsolata
@@ -363,6 +341,9 @@ rm UbuntuMono.zip
 
 sudo fc-cache -f -v
 ```
+
+> **Note**
+> Fonts are not updated everywhere even after running `sudo fc-cache -f -v`. To apply the changes systemwise, relogin into the system.
 
 3. Install `bash-tools` by running the following commands, then reopen terminal to use added extensions:
 
