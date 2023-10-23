@@ -162,29 +162,30 @@ pacstrap -i /mnt base
 genfstab /mnt >> /mnt/etc/fstab
 ```
 
-7. Install a couple of essential components, which aren't installed by default. Switch to the newly instantiated arch distibution and install the corresponding packages, then enable some services:
+7. Install a couple of essential components, which aren't installed by default:
 
 ```sh
 arch-chroot /mnt
 
-[root@archiso /] pacman -S linux linux-headers vim sudo which networkmanager # another network tools: wpa_supplicant wireless_tools netctl
-[root@archiso /] systemctl enable NetworkManager
+[root@archiso /] pacman -S linux linux-headers vim sudo which
 ```
 
-> **Important**
-> Make sure to install the mentioned network packages and enable the network-manager. These steps are needed for the network to work properly after reboot
+8. Extension point (optional) - install [network tools](extension-points/Network.md)
 
-8. Extension point (optional) - install [cpu microcode](extension-points/CPU.md)
-9. Extension point (required) - install [gpu driver][gpu]. If this step is skipped, then there will be [gpu driver issue](#gpu-driver-issue) after reboot
+> **Important**
+> Make sure to install the network packages **and enable the services**. These steps are vital for the network to work properly after reboot.
+
+9. Extension point (optional) - install [cpu microcode](extension-points/CPU.md)
+10. Extension point (required) - install [gpu driver][gpu]. If this step is skipped, then there will be [gpu driver issue](#gpu-driver-issue) after reboot
 
 > **Important**
 > Don't skip gpu driver installation - the system will hang on boot without the driver
 
-10. Extension point (optional) - install [sound toolkit](extension-points/Sound.md)
-11. Extension point (optional) - setup [desktop environment](extension-points/Desktop.md)
-12. Extension point (optional) - setup [developer tools](extension-points/AUR.md)
+11. Extension point (optional) - install [sound toolkit](extension-points/Sound.md)
+12. Extension point (optional) - setup [desktop environment](extension-points/Desktop.md)
+13. Extension point (optional) - setup [developer tools](extension-points/AUR.md)
 
-13. Configure the system language:
+14. Configure the system language:
 
 ```sh
 [root@archiso /] vim /etc/locale.gen  # uncomment line which says 'en_US.UTF-8 UTF-8' (it is strongly recommended to uncomment this value, but if you know what you are doing, you can uncomment any other line which corresponds to your desired locale by removing the '#' symbol in front of it)
@@ -193,7 +194,7 @@ arch-chroot /mnt
 [root@archiso /] vim /etc/vconsole.conf  # write: 'KEYMAP=us-eng' or whatever locale you've chosen
 ```
 
-14. Configure the system time:
+15. Configure the system time:
 
 ```sh
 [root@archiso /] ln -sf /usr/share/zoneinfo/Europe/Moscow /etc/localtime  # or reader's own timezone
@@ -201,19 +202,19 @@ arch-chroot /mnt
 [root@archiso /] timedatectl  # check current date and time
 ```
 
-15. Configure root password:
+16. Configure root password:
 
 ```sh
 [root@archiso /] passwd  # then reader will be prompted to set a new password, type the desired value, then confirm and remember it
 ```
 
-16. Set the hostname:
+17. Set the hostname:
 
 ```sh
 [root@archiso /] vim /etc/hostname  # write 'archeron' or any other name for your OS installation
 ```
 
-17. Update the `hosts` file - run command `vim /etc/hosts` and write the following content to the file (replace `archeron` with a custom host name):
+18. Update the `hosts` file - run command `vim /etc/hosts` and write the following content to the file (replace `archeron` with a custom host name):
 
 ```sh
 127.0.0.1 localhost.localdomain localhost
@@ -221,33 +222,33 @@ arch-chroot /mnt
 127.0.0.1 archeron.localdomain archeron
 ```
 
-18. Make network connections persistent:
+19. Make network connections persistent:
 
 ```sh
 [root@archiso /] systemctl enable dhcpd
 ```
 
-19. Create a new user:
+20. Create a new user:
 
 ```sh
 [root@archiso /] useradd -m -g users -G wheel mabel  # or any other username instead of 'mabel'
 [root@archiso /] passwd mabel  # or custom username instead of 'mabel', then write password, confirm and remember it
 ```
 
-20. Associate `wheel` group with `sudo`:
+21. Associate `wheel` group with `sudo`:
 
 ```sh
 [root@archiso /] EDITOR=vim visudo # Go to line that says '# %wheel ALL=(ALL) NOPASSWD: ALL' and uncomment it by removing '# ' in the beginning
 ```
 
-21. Run the following command to refresh presets for initial ramdisk:
+22. Run the following command to refresh presets for initial ramdisk:
 
 ```sh
 [root@archiso /] mkinitcpio -P
 ```
 
-22. Extension point (required) - [setup grub](extension-points/GRUB.md)
-23. Reboot into the newly installed OS - now the system should boot successfully, choose appropriate option from the **GRUB** menu:
+23. Extension point (required) - [setup grub](extension-points/GRUB.md)
+24. Reboot into the newly installed OS - now the system should boot successfully, choose appropriate option from the **GRUB** menu:
 
 ```sh
 [root@archiso /] ^D

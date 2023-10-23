@@ -4,7 +4,7 @@ It is highly recommended to install `sound toolkit`, which enables speakers. The
 
 ## Pulseaudio
 
-To install pulseaudio sound server run the following command:
+To install pulseaudio sound server, run the following command:
 
 ```sh
 pacman -S pulseaudio
