@@ -309,12 +309,12 @@ The system has booted successfully, login screen is shown, after login the deskt
 
 ### Main flow
 
-1. Enable `tap to click` following [this instruction](https://docs.fedoraproject.org/en-US/quick-docs/enable-touchpad-click/)
+1. Enable `tap to click` following [this instruction](https://docs.fedoraproject.org/en-US/quick-docs/enable-touchpad-click/), add secondary keyboard layouts in the I/O device settings as well
 
 2. Install some auxiliary software:
 
 ```sh
-sudo pacman -S neofetch unzip
+sudo pacman -S neofetch unzip python-pip
 yay -S google-chrome
 ```
 
