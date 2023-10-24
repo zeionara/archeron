@@ -459,6 +459,18 @@ zsh # enter zsh shell again
 fast-theme "$HOME/bashrc/snuffari.ini"
 ```
 
+16. Setup `conda` - the commands below are taken from the [official website](https://docs.conda.io/projects/miniconda/en/latest/)
+
+```sh
+mkdir -p ~/miniconda3
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh
+bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
+rm -rf ~/miniconda3/miniconda.sh
+```
+
+> **Important**
+> If you installed the `bashrc`, there is no need to call `conda init bash`, there is already shell initialization in `bashrc/etc/conda.sh`. However, make sure that env variable `CONDA_ROOT` contains the right folder name (`anaconda3` for full installation, `miniconda3` for minimal installation)
+
 Then if you've answered 'yes' to `make zsh the default shell`, relogin to apply the changes.
 
 ### Postconditions
