@@ -314,7 +314,7 @@ The system has booted successfully, login screen is shown, after login the deskt
 2. Install some auxiliary software:
 
 ```sh
-sudo pacman -S neofetch unzip python-pip git-lfs
+sudo pacman -S neofetch unzip python-pip git-lfs vlc
 yay -S google-chrome
 ```
 
