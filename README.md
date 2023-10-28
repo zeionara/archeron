@@ -36,7 +36,7 @@ Although being incomplete, imprecise and out-of-date, some tutorials are still u
 1. [Ubuntu and arch dual-boot installation guide](https://www.linuxandubuntu.com/home/dual-boot-ubuntu-and-arch-linux) - be warned, here the author uses **DOS** partition table (and possibly **BIOS** instead of **UEFI**), which is incompatible with this tutorial;
 1. [Arch installation guide on youtube](https://www.youtube.com/watch?v=DPLnBPM4DhI) - this guide goes through installation on an empty disk using `linux lvm`. `Linux lvm` actually only complicates the installation process, and overall the guide is extensive but poorly structured;
 1. [How to install GRUB on Arch Linux](https://fasterland.net/how-to-install-grub-on-arch-linux-uefi.html) - this tutorial may be useful as an extension to the current guide which doesn't discuss the issue of installing **GRUB bootloader**.
-1. [Official gentoo linux installation guide](gentoo-guide) proposes a brief explanation of the fundamental concepts required for manual installation of linux such as partition tables, bootloader, file systems, etc. **Therefore, it is strongly recommended to read at least the gentoo installation guide up to the third stage at least before proceeding in this guide**.
+1. [Official gentoo linux installation guide][gentoo-guide] proposes a brief explanation of the fundamental concepts required for manual installation of linux such as partition tables, bootloader, file systems, etc. **Therefore, it is strongly recommended to read the gentoo installation guide up to the third stage at least before proceeding in this guide**.
 
 ## Getting started
 
