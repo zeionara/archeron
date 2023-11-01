@@ -366,7 +366,7 @@ gpgeng
 6. Install `git-tools`, then reopen terminal to use added extensions:
 
 ```sh
-git clone git@github.com/zeionara/git-tools.git "$HOME/git-tools"
+git clone git@github.com:zeionara/git-tools.git "$HOME/git-tools"
 echo -e '\n. "$HOME/git-tools/.bashrc"' >> "$HOME/.bashrc"
 ```
 
@@ -447,7 +447,8 @@ echo -e '\n. $HOME/paste-token/aliases.sh' >> "$HOME/.bashrc"
 ```sh
 sudo pacman -S tmux
 git clone git@github.com:zeionara/tmux-config.git "$HOME/tmux-config"
-$HOME/tmux-config/install.sh
+cd $HOME/tmux-config
+./install.sh
 ```
 
 15. Setup `bashrc`
